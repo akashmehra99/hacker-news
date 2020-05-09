@@ -1,0 +1,21 @@
+header {
+  background: #ff6600;
+  padding: 1rem;
+  position: fixed;
+  width: 100%;
+  .header_container {
+    display: flex;
+    .logo {
+      border: 2px solid #ffffff;
+      padding: 0.6rem 1rem;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 1.8rem;
+    }
+    .title {
+      padding: 0.7rem;
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+  }
+}

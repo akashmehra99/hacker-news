@@ -1,0 +1,43 @@
+@import '../base/settings';
+
+.item_container {
+  display: flex;
+  margin-bottom: 2rem;
+  .index {
+      position: relative;
+      width: 3rem;
+      text-align: right;
+      color: $light-grey;
+  }
+  .upvote {
+    width: 0;
+    margin-left: 0.5rem;
+    height: 0.7rem;
+    border-left: 0.4rem solid transparent;
+    border-right: 0.4rem solid transparent;
+    border-bottom: 0.6rem solid $light-grey;
+  }
+  .item_title_container {
+    margin-left: 1rem;
+
+    .item_title {
+        display: flex;
+    }
+    .item_domain {
+        margin-left: 1rem;
+        font-size: 1.3rem;
+        margin-top: 0.3rem;
+        color: $light-grey;
+        text-decoration: none;
+    }
+    .item_domain:hover {
+        text-decoration: underline;
+    }
+    .sub_text {
+        font-size: 1.3rem;
+        margin-top: 0.3rem;
+        color: $light-grey;
+    }
+  }
+  
+}
