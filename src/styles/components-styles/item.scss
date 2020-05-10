@@ -9,6 +9,12 @@
       text-align: right;
       color: $light-grey;
   }
+  .upvote_button {
+    padding: 0;
+    height: 0;
+    margin: 0;
+    border: 0;
+  }
   .upvote {
     width: 0;
     margin-left: 0.5rem;
@@ -37,6 +43,12 @@
         font-size: 1.3rem;
         margin-top: 0.3rem;
         color: $light-grey;
+        .hide {
+          border: 0;
+          padding: 0;
+          background: none;
+          color: $light-grey;
+        }
     }
   }
   
