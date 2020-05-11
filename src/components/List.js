@@ -14,6 +14,7 @@ class List extends React.Component {
       startIndex: 1,
     };
     this.loadNext = this.loadNext.bind(this);
+    this.loadPrev = this.loadPrev.bind(this);
     this.hideStory = this.hideStory.bind(this);
     this.upVote = this.upVote.bind(this);
   }
@@ -27,7 +28,6 @@ class List extends React.Component {
     const filtered = this.state.hits.filter(
       (item) => item.objectID !== objectID
     );
-    this.state.startIndex = this.state.pageNumber * 20 + 1;
     this.setState(() => ({ hits: filtered }));
     // Code for api call to hide
   };
@@ -49,6 +49,13 @@ class List extends React.Component {
     const next = +localStorage.getItem("pageNumber") + 1;
     localStorage.setItem("pageNumber", next);
     this.getDataFromApi(next);
+  };
+
+  loadPrev = () => {
+    const prev = +localStorage.getItem("pageNumber") - 1;
+    localStorage.setItem("pageNumber", prev);
+    this.state.startIndex = prev * 20 + 1;
+    this.getDataFromApi(prev);
   };
 
   getDataFromApi(pageNumber) {
@@ -90,14 +97,12 @@ class List extends React.Component {
     }
   }
   render() {
-    const grapData = [
-      ["x", "Story ID"]
-    ];
+    const grapData = [["x", "Story ID"]];
     for (let i = 0; i < this.state.hits.length; i++) {
       if (this.state.hits && this.state.hits[i].objectID) {
         grapData.push([
           +this.state.hits[i].objectID,
-          +this.state.hits[i].points || 0
+          +this.state.hits[i].points || 0,
         ]);
       }
     }
@@ -121,15 +126,22 @@ class List extends React.Component {
               );
             })}
         </React.Fragment>
-        <React.Fragment>
-          <div onClick={this.loadNext} className="more">
-            More
-          </div>
-        </React.Fragment>
+        <div className="btn-container">
+          <button
+            onClick={this.loadPrev}
+            disabled={this.state.pageNumber === 0}
+            className="more"
+          >
+            Prev
+          </button>
+          <button onClick={this.loadNext} className="more">
+            Next
+          </button>
+        </div>
         <div className="graph_container">
           <Chart
-            width={"100%"}
-            height={"400px"}
+            width="100%"
+            height="400px"
             chartType="LineChart"
             loader={<div>Loading Chart</div>}
             data={grapData}

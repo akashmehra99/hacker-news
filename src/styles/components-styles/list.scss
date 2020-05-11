@@ -1,11 +1,24 @@
 @import '../base/settings';
 
-.more {
-    padding: 0 4rem;
-    font-size: 2rem;
-    cursor: pointer;
-    color: $light-grey;
+.btn-container {
+    display: flex;
+    margin-bottom: 3rem;
+    .more {
+        padding: 1rem 4rem;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #ff6600;
+        border: 1px solid;
+        margin: 0 4rem;
+        background: none;
+    }
+
+    .more:disabled {
+        background: grey;
+        color: white;
+    }
 }
+
 
 .graph_container {
     max-width: 100%;
