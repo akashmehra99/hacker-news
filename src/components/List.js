@@ -28,22 +28,55 @@ class List extends React.Component {
     const filtered = this.state.hits.filter(
       (item) => item.objectID !== objectID
     );
+    this.state.startIndex = this.state.pageNumber * 20 + 1;
     this.setState(() => ({ hits: filtered }));
+    let hidden = JSON.parse(localStorage.getItem('hidden')) || [];
+    hidden.push(objectID);
+    localStorage.setItem('hidden', JSON.stringify(hidden));
     // Code for api call to hide
   };
 
+  hideDataOnRefresh = () => {
+    const hidden = JSON.parse(localStorage.getItem('hidden'));
+    const hits = this.state.hits.filter((item) => hidden.indexOf(item.objectID) === -1);
+    this.state.startIndex = this.state.pageNumber * 20 + 1;
+
+    this.setState(() => ({hits}));
+  }
+
   upVote = (objectID) => {
+    let upvotes = JSON.parse(localStorage.getItem('upvotes')) || {};
     const hits = this.state.hits;
     for (let i = 0; i < hits.length; i++) {
       if (hits[i].objectID === objectID) {
         hits[i].points = (hits[i].points || 0) + 1;
+        upvotes[objectID] = hits[i].points;
         break;
       }
     }
+    localStorage.setItem('upvotes', JSON.stringify(upvotes));
     this.state.startIndex = this.state.pageNumber * 20 + 1;
     this.setState(() => ({ hits }));
     // api call for upVotes code goes here
   };
+
+  updateVotes = () => {
+    let upvotes = JSON.parse(localStorage.getItem('upvotes')) || {};
+    const keys = Object.keys(upvotes);
+    let hits = this.state.hits;
+    for (let i = 0; i < hits.length; i++) {
+      if (!keys.length) {
+        break;
+      }
+      const ind = keys.indexOf(hits[i].objectID);
+      if (ind > -1) {
+        hits[i].points = upvotes[keys[ind]];
+        delete keys[hits[i].objectID];
+      }
+    }
+    this.state.startIndex = this.state.pageNumber * 20 + 1;
+    this.setState(() => ({hits}));
+  }
 
   loadNext = () => {
     const next = +localStorage.getItem("pageNumber") + 1;
@@ -70,6 +103,8 @@ class List extends React.Component {
             error: false,
             pageNumber,
           }));
+          this.hideDataOnRefresh();
+          this.updateVotes();
           window.scrollTo(0, 0);
         },
         (error) => {
