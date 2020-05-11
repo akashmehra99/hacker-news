@@ -37,7 +37,7 @@ class List extends React.Component {
   };
 
   hideDataOnRefresh = () => {
-    const hidden = JSON.parse(localStorage.getItem('hidden'));
+    const hidden = JSON.parse(localStorage.getItem('hidden')) || [];
     const hits = this.state.hits.filter((item) => hidden.indexOf(item.objectID) === -1);
     this.state.startIndex = this.state.pageNumber * 20 + 1;
 
@@ -70,8 +70,8 @@ class List extends React.Component {
       }
       const ind = keys.indexOf(hits[i].objectID);
       if (ind > -1) {
-        hits[i].points = upvotes[keys[ind]];
-        delete keys[hits[i].objectID];
+        hits[i].points = upvotes[hits[i].objectID];
+        delete keys[ind];
       }
     }
     this.state.startIndex = this.state.pageNumber * 20 + 1;
