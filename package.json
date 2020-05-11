@@ -20,7 +20,7 @@
     "react-addons-shallow-compare": "^15.6.2",
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
-    "react-linechart": "^1.1.12",
+    "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.1.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.3",

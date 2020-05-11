@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import LineChart from "react-linechart";
+import Chart from "react-google-charts";
 import "../styles/components-styles/list.scss";
 import Items from "./Items";
 
@@ -23,19 +23,19 @@ class List extends React.Component {
     this.getDataFromApi(this.state.pageNumber);
   }
 
-  hideStory = (story_id) => {
+  hideStory = (objectID) => {
     const filtered = this.state.hits.filter(
-      (item) => item.story_id !== story_id
+      (item) => item.objectID !== objectID
     );
     this.state.startIndex = this.state.pageNumber * 20 + 1;
     this.setState(() => ({ hits: filtered }));
     // Code for api call to hide
   };
 
-  upVote = (story_id) => {
+  upVote = (objectID) => {
     const hits = this.state.hits;
     for (let i = 0; i < hits.length; i++) {
-      if (hits[i].story_id === story_id) {
+      if (hits[i].objectID === objectID) {
         hits[i].points = (hits[i].points || 0) + 1;
         break;
       }
@@ -52,7 +52,9 @@ class List extends React.Component {
   };
 
   getDataFromApi(pageNumber) {
-    fetch(`https://hn.algolia.com/api/v1/search_by_date?page=${pageNumber}`)
+    fetch(
+      `https://hn.algolia.com/api/v1/search_by_date?numericFilters=points>0,num_comments>0&page=${pageNumber}`
+    )
       .then((res) => res.json())
       .then(
         (result) => {
@@ -89,29 +91,16 @@ class List extends React.Component {
   }
   render() {
     const grapData = [
-      {
-        color: "steelblue",
-        points: [],
-      },
+      ["x", "Story ID"]
     ];
     for (let i = 0; i < this.state.hits.length; i++) {
-      if (this.state.hits && this.state.hits[i].story_id) {
-        grapData[0].points.push({
-          x: this.state.hits[i].story_id,
-          y: this.state.hits[i].points || 0,
-        });
+      if (this.state.hits && this.state.hits[i].objectID) {
+        grapData.push([
+          +this.state.hits[i].objectID,
+          +this.state.hits[i].points || 0
+        ]);
       }
     }
-    // const data = [
-    //   {
-    //     color: "steelblue",
-    //     points: [
-    //       { x: 1, y: 50 },
-    //       { x: 3, y: 100 },
-    //       { x: 7, y: 300 },
-    //     ],
-    //   },
-    // ];
     return (
       <React.Fragment>
         <React.Fragment>
@@ -126,8 +115,8 @@ class List extends React.Component {
                   key={index}
                   item={item}
                   index={this.state.startIndex++}
-                  upvote={(story_id) => this.upVote(story_id)}
-                  hide={(story_id) => this.hideStory(story_id)}
+                  upvote={(objectID) => this.upVote(objectID)}
+                  hide={(objectID) => this.hideStory(objectID)}
                 />
               );
             })}
@@ -138,11 +127,21 @@ class List extends React.Component {
           </div>
         </React.Fragment>
         <div className="graph_container">
-          <LineChart
-            height={600}
+          <Chart
+            width={"100%"}
+            height={"400px"}
+            chartType="LineChart"
+            loader={<div>Loading Chart</div>}
             data={grapData}
-            xLabel="Story Id"
-            yLabel="Votes"
+            options={{
+              hAxis: {
+                title: "Story ID",
+              },
+              vAxis: {
+                title: "Votes",
+              },
+            }}
+            rootProps={{ "data-testid": "1" }}
           />
         </div>
       </React.Fragment>

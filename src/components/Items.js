@@ -9,11 +9,11 @@ class Items extends React.Component {
   }
 
   setHide =() => {
-    this.props.hide(this.props.item.story_id);
+    this.props.hide(this.props.item.objectID);
   }
 
   upvote = () => {
-    this.props.upvote(this.props.item.story_id);
+    this.props.upvote(this.props.item.objectID);
   }
 
   render() {
