@@ -6,3 +6,8 @@
     cursor: pointer;
     color: $light-grey;
 }
+
+.graph_container {
+    max-width: 100%;
+    overflow-x: scroll;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-
+import LineChart from "react-linechart";
 import "../styles/components-styles/list.scss";
 import Items from "./Items";
 
@@ -40,10 +40,10 @@ class List extends React.Component {
         break;
       }
     }
-    this.state.startIndex = (this.state.pageNumber * 20) + 1;
-    this.setState(() => ({hits}));
+    this.state.startIndex = this.state.pageNumber * 20 + 1;
+    this.setState(() => ({ hits }));
     // api call for upVotes code goes here
-  }
+  };
 
   loadNext = () => {
     const next = +localStorage.getItem("pageNumber") + 1;
@@ -88,6 +88,30 @@ class List extends React.Component {
     }
   }
   render() {
+    const grapData = [
+      {
+        color: "steelblue",
+        points: [],
+      },
+    ];
+    for (let i = 0; i < this.state.hits.length; i++) {
+      if (this.state.hits && this.state.hits[i].story_id) {
+        grapData[0].points.push({
+          x: this.state.hits[i].story_id,
+          y: this.state.hits[i].points || 0,
+        });
+      }
+    }
+    // const data = [
+    //   {
+    //     color: "steelblue",
+    //     points: [
+    //       { x: 1, y: 50 },
+    //       { x: 3, y: 100 },
+    //       { x: 7, y: 300 },
+    //     ],
+    //   },
+    // ];
     return (
       <React.Fragment>
         <React.Fragment>
@@ -113,6 +137,14 @@ class List extends React.Component {
             More
           </div>
         </React.Fragment>
+        <div className="graph_container">
+          <LineChart
+            height={600}
+            data={grapData}
+            xLabel="Story Id"
+            yLabel="Votes"
+          />
+        </div>
       </React.Fragment>
     );
   }
