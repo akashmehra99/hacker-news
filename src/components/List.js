@@ -132,7 +132,7 @@ class List extends React.Component {
     }
   }
   render() {
-    const grapData = [["x", "Story ID"]];
+    const grapData = [["x", "Votes"]];
     for (let i = 0; i < this.state.hits.length; i++) {
       if (this.state.hits && this.state.hits[i].objectID) {
         grapData.push([
