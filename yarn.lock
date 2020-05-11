@@ -1849,6 +1849,10 @@ cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
 
+d3@3.5.17:
+  version "3.5.17"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-3.5.17.tgz#bc46748004378b21a360c9fc7cf5231790762fb8"
+
 dashdash@^1.12.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
@@ -2343,7 +2347,7 @@ faye-websocket@^0.10.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.4:
+fbjs@^0.8.4, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -4228,6 +4232,13 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
+prop-types@15.5.10:
+  version "15.5.10"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
+  dependencies:
+    fbjs "^0.8.9"
+    loose-envify "^1.3.1"
+
 prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
@@ -4395,6 +4406,13 @@ react-dom@^16.13.1:
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.9.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
+
+react-linechart@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/react-linechart/-/react-linechart-1.1.12.tgz#d33ff7444c3501312edae4d7493b2ef7072c8a12"
+  dependencies:
+    d3 "3.5.17"
+    prop-types "15.5.10"
 
 react-moment-proptypes@^1.6.0:
   version "1.7.0"
